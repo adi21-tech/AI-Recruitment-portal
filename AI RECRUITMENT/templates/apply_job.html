@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Apply - {{ job.title }}{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-7">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h4 class="card-title">{{ job.title }}</h4>
+                <p class="text-muted">{{ job.description }}</p>
+                <p><strong>Required Skills:</strong> {{ job.required_skills }}</p>
+                <hr>
+                <form method="POST" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label class="form-label">Upload Resume (PDF, DOCX, or TXT)</label>
+                        <input type="file" name="resume" class="form-control" accept=".pdf,.docx,.txt" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Submit Application</button>
+                </form>
+                <a href="{{ url_for('student_dashboard') }}" class="btn btn-link mt-2">Back to Dashboard</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

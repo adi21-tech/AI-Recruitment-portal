@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Company Dashboard</h1>
+
+<p><a href="{{ url_for('post_job') }}">+ Post a New Job</a></p>
+
+<h2>Your Posted Jobs</h2>
+
+{% if jobs %}
+  <ul>
+    {% for job in jobs %}
+      <li>
+        <strong>{{ job['title'] }}</strong><br>
+        {{ job['description'] }}<br>
+        <a href="{{ url_for('view_applicants', job_id=job['id']) }}">View Applicants</a>
+        |
+        <a href="{{ url_for('schedule_interview', job_id=job['id']) }}">Schedule Interview</a>
+      </li>
+      <hr>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p>You haven't posted any jobs yet.</p>
+{% endif %}
+
+{% endblock %}

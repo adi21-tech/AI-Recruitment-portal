@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Student Dashboard{% endblock %}
+{% block content %}
+<h3 class="mb-3">Available Jobs</h3>
+
+{% if jobs %}
+<div class="list-group">
+    {% for job in jobs %}
+    <div class="list-group-item">
+        <div class="d-flex justify-content-between align-items-start">
+            <div>
+                <h5>{{ job.title }}</h5>
+                <p class="mb-1 text-muted">{{ job.description[:150] }}{% if job.description|length > 150 %}...{% endif %}</p>
+                <small class="text-secondary">Company: {{ job.company_name }}</small><br>
+                <small class="text-secondary">Skills: {{ job.required_skills }}</small>
+            </div>
+            <div>
+                {% if job.id in applied_job_ids %}
+                    <span class="badge bg-success">Applied</span>
+                {% else %}
+                    <a href="{{ url_for('apply_job', job_id=job.id) }}" class="btn btn-sm btn-primary">Apply</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<p class="text-muted">No jobs posted yet.</p>
+{% endif %}
+
+<div class="mt-4">
+    <a href="{{ url_for('student_interviews') }}" class="btn btn-outline-secondary">My Interview Slots</a>
+</div>
+{% endblock %}

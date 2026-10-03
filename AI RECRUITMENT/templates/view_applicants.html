@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Applicants - {{ job.title }}{% endblock %}
+{% block content %}
+<h3 class="mb-1">{{ job.title }}</h3>
+<p class="text-muted">Applicants ranked by AI match score (highest first)</p>
+
+{% if applicants %}
+<div class="list-group">
+    {% for app in applicants %}
+    <div class="list-group-item">
+        <div class="d-flex justify-content-between align-items-start">
+            <div>
+                <h5>{{ app.full_name }} <small class="text-muted">({{ app.username }})</small></h5>
+                <p class="mb-1">
+                    <span class="badge bg-primary">Match Score: {{ app.match_score }}%</span>
+                </p>
+                <p class="mb-1"><strong>Matched Skills:</strong> {{ app.matched_skills or "None" }}</p>
+                <p class="mb-1"><strong>Missing Skills:</strong> {{ app.missing_skills or "None" }}</p>
+            </div>
+            <div>
+                <a href="{{ url_for('download_resume', filename=app.resume_filename) }}" class="btn btn-sm btn-outline-primary">Download Resume</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<p class="text-muted">No applicants yet.</p>
+{% endif %}
+
+<a href="{{ url_for('company_dashboard') }}" class="btn btn-link mt-3">Back to Dashboard</a>
+{% endblock %}
